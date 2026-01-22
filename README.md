@@ -2,16 +2,22 @@
 
 A scalable, accessible React component for hierarchical data selection with support for virtualization, async loading, and multi-select functionality.
 
+## 🚀 Live Demo
+
+**[View Storybook →](https://697214d27903076a7e399f4f-eyatvxdksw.chromatic.com/)**
+
+Explore all components, features, and edge cases in the live Storybook deployment.
+
 ## Features
 
-- ✅ **Virtualized Rendering** - Handle 50k+ nodes efficiently
-- ✅ **Multi-Select** - Select individual items or entire branches
-- ✅ **Async Loading** - Load data on-demand for large datasets
-- ✅ **Search** - Fast filtering with context preservation
-- ✅ **Keyboard Navigation** - Full keyboard accessibility
-- ✅ **ARIA Compliant** - WCAG 2.1 AA standards
-- ✅ **TypeScript** - Full type safety
-- ✅ **Tested** - Comprehensive unit and integration tests
+-  **Virtualized Rendering** - Handle 50k+ nodes efficiently
+-  **Multi-Select** - Select individual items or entire branches
+- **Async Loading** - Load data on-demand for large datasets
+- **Search** - Fast filtering with context preservation
+- **Keyboard Navigation** - Full keyboard accessibility
+-  **ARIA Compliant** - WCAG 2.1 AA standards
+-  **TypeScript** - Full type safety
+-  **Tested** - Comprehensive unit and integration tests
 
 ## Installation
 
@@ -188,6 +194,6 @@ For issues and questions:
 
 ## Project Status
 
-✅ **Production Ready** - All features complete and tested
+ **Production Ready** - All features complete and tested
 
 See [STATUS.md](./STATUS.md) for detailed project status.
