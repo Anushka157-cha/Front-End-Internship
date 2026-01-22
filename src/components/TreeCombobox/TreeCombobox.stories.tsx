@@ -99,6 +99,7 @@ const sampleData: TreeNode[] = [
 export const Basic: Story = {
   args: {
     nodes: sampleData,
+    multiSelect: true,
     placeholder: 'Select items...',
   },
 };
@@ -114,7 +115,17 @@ export const SingleSelect: Story = {
 export const WithSearch: Story = {
   args: {
     nodes: sampleData,
+    multiSelect: true,
     onSearch: (query: string) => console.log('Search:', query),
+  },
+};
+
+export const IndeterminateStates: Story = {
+  name: 'Multi-Select with Indeterminate',
+  args: {
+    nodes: sampleData,
+    multiSelect: true,
+    placeholder: 'Select parents and children to see indeterminate states',
   },
 };
 
@@ -126,7 +137,6 @@ export const Disabled: Story = {
 };
 
 // Generate large dataset for performance testing
-// Tests virtualization with ~20k nodes
 const generateLargeDataset = (depth: number = 3, breadth: number = 40): TreeNode[] => {
   const generateNode = (id: string, level: number, maxLevel: number): TreeNode => {
     const node: TreeNode = {
@@ -143,28 +153,60 @@ const generateLargeDataset = (depth: number = 3, breadth: number = 40): TreeNode
     return node;
   };
 
-  // Generate root nodes - ~20,000 total nodes (30 roots × 40 children × 40 grandchildren)
-  return Array.from({ length: 30 }, (_, i) => 
+  // Generate root nodes - adjust count based on breadth for desired total
+  const rootCount = breadth === 50 ? 100 : 30; // 100 roots for 5k test
+  return Array.from({ length: rootCount }, (_, i) => 
     generateNode(`root-${i}`, 0, depth)
   );
 };
 
-// Smaller performance test - 1000 nodes (enough to show virtualization working)
-// 50 roots × 20 children = 1000 nodes total
-export const LargeDataset_1k: Story = {
-  name: 'Performance Test (1k Nodes)',
+export const LargeDataset_5k: Story = {
+  name: 'Performance Test (5k Nodes)',
   args: {
-    nodes: generateLargeDataset(2, 20), // 50 roots × 20 children
+    nodes: generateLargeDataset(2, 50),
+    multiSelect: true,
     containerHeight: 500,
     itemHeight: 32,
-    placeholder: "Select from 1000+ items...",
+    placeholder: "Select from 5000+ items...",
   },
-  parameters: {
-    docs: { 
-      description: {
-        story: 'Tests virtualization with 1000+ nodes. Only ~15-20 DOM nodes rendered at once. Open DevTools to verify.'
-      }
-    },
+};
+
+export const KeyboardOnlyNavigation: Story = {
+  name: 'Keyboard Navigation',
+  args: {
+    nodes: sampleData,
+    multiSelect: true,
+    placeholder: 'Use Tab, Arrow keys, Enter, Space',
+  },
+};
+
+export const ScreenReaderMode: Story = {
+  name: 'Screen Reader Support',
+  args: {
+    nodes: sampleData,
+    multiSelect: true,
+    ariaLabel: 'Food categories tree selection',
+    placeholder: 'Accessible tree combobox',
+  },
+};
+
+export const FocusPreservation: Story = {
+  name: 'Focus During Virtualization',
+  args: {
+    nodes: generateLargeDataset(2, 30),
+    multiSelect: true,
+    containerHeight: 400,
+    itemHeight: 32,
+    placeholder: 'Scroll to test focus preservation',
+  },
+};
+
+export const HighContrastKeyboard: Story = {
+  name: 'High Contrast Focus',
+  args: {
+    nodes: sampleData,
+    multiSelect: true,
+    placeholder: 'Test keyboard focus visibility',
   },
 };
 
@@ -245,14 +287,15 @@ const generateMassiveDataset = (): TreeNode[] => {
 // 1k story above is sufficient to demonstrate virtualization
 
 export const WithAsyncLoading: Story = {
+  name: 'Async Node Loading',
   args: {
     nodes: [
       { id: '1', label: 'Parent 1', children: [] },
       { id: '2', label: 'Parent 2', children: [] },
       { id: '3', label: 'Parent 3', children: [] },
     ],
+    multiSelect: true,
     loader: async ({ parentId }: { parentId?: string }) => {
-      // Fast 400ms load time - impressive demo speed
       await new Promise((resolve) => setTimeout(resolve, 400));
       return [
         { id: `${parentId}-1`, label: `Child ${parentId}-1` },
@@ -263,7 +306,6 @@ export const WithAsyncLoading: Story = {
   },
 };
 
-// Large async dataset - loads items on demand
 export const LargeAsyncDataset: Story = {
   name: 'Large Async Loading',
   args: {
@@ -272,6 +314,7 @@ export const LargeAsyncDataset: Story = {
       label: `Category ${i + 1} (Click to load 50 items)`,
       children: [],
     })),
+    multiSelect: true,
     loader: async ({ parentId }: { parentId?: string }) => {
       await new Promise((resolve) => setTimeout(resolve, 200));
       return Array.from({ length: 50 }, (_, i) => ({
@@ -282,11 +325,4 @@ export const LargeAsyncDataset: Story = {
     containerHeight: 600,
     placeholder: "Expand to load items...",
   },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Demonstrates async loading. 50 parents × 50 children = 2,500 nodes loaded on demand.'
-      }
-    }
-  }
 };
