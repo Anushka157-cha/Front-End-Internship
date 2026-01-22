@@ -1,143 +1,193 @@
 # Hierarchical Tree Selection Component
 
-**Optimized for Large Datasets (10k-100k+ nodes)** - Built with React 18, TypeScript (strict mode), and custom virtualization. Zero external tree/select/virtualization libraries.
-
-## 🎯 Large Dataset Focus
-
-This component is specifically designed and evaluated for **large dataset performance**:
-
-- ✅ **10k+ Nodes**: Smooth 60fps scrolling with custom virtualization
-- ✅ **50k+ Nodes**: < 100ms initial render, only ~30-40 DOM elements
-- ✅ **100k Nodes**: Memory efficient with lazy loading
-- ✅ **Zero Libraries**: No react-window, TanStack Virtual, or any virtualization lib
-
-**[📊 Performance Documentation](PERFORMANCE.md)** - Detailed optimization strategies
-
-## Status
-
-| Requirement | Status | Details |
-|------------|--------|---------|
-| Search Ancestry | ✅ FIXED | Full hierarchy preserved |
-| Accessibility | ✅ VERIFIED | 0 Axe violations |
-| Virtualization | ✅ REAL | Custom implementation, handles 100k+ nodes |
-| Keyboard Nav | ✅ COMPLETE | All arrow keys, Space, Enter, Escape, Home, End |
-| Async Loading | ✅ REAL | 1000ms delay + error handling |
-| TypeScript | ✅ 0 ERRORS | Strict mode fully compliant |
-
-**[Full Checklist](./ASSIGNMENT_CHECKLIST.md)** | **[Known Limitations](./KNOWN_LIMITATIONS.md)** | **[Virtualization Docs](./VIRTUALIZATION.md)**
+A scalable, accessible React component for hierarchical data selection with support for virtualization, async loading, and multi-select functionality.
 
 ## Features
 
-- **Large Dataset Optimization** - 10k-100k+ nodes with custom virtualization
-- **60fps Scrolling** - RAF-throttled scroll handling
-- **Async Tree Loading** - Load tree nodes on-demand with AbortController
-- **Memory Efficient** - Only expanded nodes in memory, lazy flattening
-- **Search with Early Termination** - Fast search with max results limit
-- **Multi-Select** - Select multiple nodes with indeterminate state
-- **Keyboard Navigation** - Arrow keys, Enter, Space, Escape, Home, End
-- **Screen Reader Support** - Full ARIA implementation
-- **No External Libraries** - Built without tree/select/virtualization libraries
-- **Tailwind CSS** - Utility-first styling
-- **TypeScript Strict Mode** - noImplicitAny, strictNullChecks enabled
+- ✅ **Virtualized Rendering** - Handle 50k+ nodes efficiently
+- ✅ **Multi-Select** - Select individual items or entire branches
+- ✅ **Async Loading** - Load data on-demand for large datasets
+- ✅ **Search** - Fast filtering with context preservation
+- ✅ **Keyboard Navigation** - Full keyboard accessibility
+- ✅ **ARIA Compliant** - WCAG 2.1 AA standards
+- ✅ **TypeScript** - Full type safety
+- ✅ **Tested** - Comprehensive unit and integration tests
 
-## Tech Stack
-
-### Core Requirements
-- React 18.3.1
-- TypeScript 5.7.2 (strict mode)
-- Vite 6.0.3
-
-### Styling
-- Tailwind CSS 3.4.17
-- PostCSS + Autoprefixer
-
-### Dev Tools
-- Storybook 8.5.0
-- ESLint + TypeScript ESLint
-- Prettier
-- Testing Library
-- Vitest
-
-### Not Using These
-- No MUI, Ant Design, Chakra UI, Radix UI, Headless UI, or any component library
-- No react-table, tanstack/virtual, react-window, or virtualization libraries
-- No downshift, react-select, floating-ui, or utility libraries
-- All primitives built from scratch
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── TreeNode/           # individual tree nodes
-│   ├── TreeCombobox/       # main component
-│   ├── VirtualizedTree/    # virtual scroll container
-│   ├── TreeSearch/         # search input
-│   └── SelectionTags/      # selected items display
-├── hooks/
-│   ├── useTreeData.ts      # tree state & async loading
-│   ├── useSelection.ts     # multi-select logic
-│   ├── useKeyboard.ts      # keyboard navigation
-│   └── useVirtualization.ts # viewport calculations
-├── utils/
-│   ├── treeTraversal.ts    # tree traversal functions
-│   ├── searchUtils.ts      # search logic
-│   ├── a11y.ts             # accessibility helpers
-│   └── types.ts            # TypeScript types
-└── styles/
-    └── index.css           # global styles + Tailwind
-```
-
-## Getting Started
-
-Install dependencies:
+## Installation
 
 ```bash
+npm install hierarchical-tree-selection
+```
+
+## Quick Start
+
+```tsx
+import { TreeCombobox } from 'hierarchical-tree-selection';
+import 'hierarchical-tree-selection/dist/style.css';
+
+function App() {
+  const treeData = [
+    {
+      id: '1',
+      label: 'Parent',
+      children: [
+        { id: '1-1', label: 'Child 1' },
+        { id: '1-2', label: 'Child 2' }
+      ]
+    }
+  ];
+
+  const handleSelectionChange = (selectedIds: Set<string>) => {
+    console.log('Selected:', Array.from(selectedIds));
+  };
+
+  return (
+    <TreeCombobox
+      data={treeData}
+      onSelectionChange={handleSelectionChange}
+      placeholder="Select items..."
+    />
+  );
+}
+```
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm 9+
+
+### Setup
+
+```bash
+# Clone repository
+git clone <repository-url>
+cd internship\ 2
+
+# Install dependencies
 npm install
-```
 
-Start dev server:
-
-```bash
+# Start development server
 npm run dev
 ```
 
-## Storybook
-
-View component documentation:
+### Available Scripts
 
 ```bash
-npm run storybook
+# Development
+npm run dev              # Start Vite dev server
+npm run storybook        # Start Storybook on port 6006
+
+# Build
+npm run build            # Build for production
+npm run build-storybook  # Build Storybook
+
+# Testing
+npm test                 # Run tests in watch mode
+npm run test:coverage    # Generate coverage report
+
+# Code Quality
+npm run lint             # Lint code
+npm run lint:fix         # Fix linting issues
+npm run format           # Format code with Prettier
+npm run type-check       # TypeScript type checking
+
+# Accessibility
+npm run a11y:audit       # Run accessibility audit
+
+# Deployment
+npm run chromatic        # Deploy to Chromatic
 ```
-
-Build for production:
-
-```bash
-npm run build
-```
-
-## Key Features Explained
-
-### Virtualization
-Only renders visible nodes based on scroll position. See [VIRTUALIZATION.md](./VIRTUALIZATION.md) for details.
-
-### Async Loading
-Tree nodes can be loaded on-demand when expanding parent nodes.
-
-### Keyboard Navigation
-Full keyboard support - arrow keys to navigate, Space/Enter to select, Escape to close.
-
-### Accessibility
-WCAG 2.1 Level AA compliant with full screen reader support. See [ACCESSIBILITY.md](./ACCESSIBILITY.md).
 
 ## Documentation
 
-- [API Documentation](./API.md) - Component props and usage
-- [Accessibility](./ACCESSIBILITY.md) - A11y features and testing
-- [Virtualization](./VIRTUALIZATION.md) - How virtual scrolling works
-- [Known Limitations](./KNOWN_LIMITATIONS.md) - Current limitations and trade-offs
-- [Status](./STATUS.md) - Project status and testing checklist
+- [Quick Start Guide](./QUICK_START.md) - Get started in 5 minutes
+- [API Documentation](./API.md) - Complete API reference
+- [Accessibility Guide](./ACCESSIBILITY.md) - WCAG compliance details
+- [Performance Guide](./PERFORMANCE.md) - Optimization strategies
+- [Deployment Guide](./DEPLOYMENT_GUIDE.md) - Production deployment
+
+## Architecture
+
+The component is built with:
+
+- **React 18** - UI framework with concurrent features
+- **TypeScript** - Type safety and better DX
+- **Vite** - Fast build tool and dev server
+- **Vitest** - Unit testing framework
+- **Storybook** - Component documentation and testing
+- **TailwindCSS** - Utility-first styling
+
+## Browser Support
+
+- Chrome (last 2 versions)
+- Firefox (last 2 versions)
+- Safari (last 2 versions)
+- Edge (last 2 versions)
+
+## Accessibility
+
+This component is designed with accessibility as a priority:
+
+- ARIA 1.2 compliant tree widget patterns
+- Full keyboard navigation support
+- Screen reader optimized
+- High contrast mode support
+- Focus management
+- WCAG 2.1 AA compliant
+
+See [ACCESSIBILITY.md](./ACCESSIBILITY.md) for details.
+
+## Performance
+
+Optimized for large datasets:
+
+- Virtualized rendering (only visible nodes in DOM)
+- Async data loading support
+- Efficient state management
+- Debounced search
+- Memoized calculations
+
+See [PERFORMANCE.md](./PERFORMANCE.md) for benchmarks.
+
+## Testing
+
+Comprehensive test coverage including:
+
+- Unit tests for utilities and hooks
+- Integration tests for components
+- Accessibility tests with axe-core
+- Visual regression tests with Chromatic
+
+```bash
+npm test                 # Run all tests
+npm run test:coverage    # View coverage report
+npm run a11y:audit       # Accessibility audit
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-MIT
+MIT License - see [LICENSE](./LICENSE) file for details
+
+## Support
+
+For issues and questions:
+
+- Open an issue on GitHub
+- Check [Known Limitations](./KNOWN_LIMITATIONS.md)
+- Review [Documentation Index](./DOCUMENTATION_INDEX.md)
+
+## Project Status
+
+✅ **Production Ready** - All features complete and tested
+
+See [STATUS.md](./STATUS.md) for detailed project status.
