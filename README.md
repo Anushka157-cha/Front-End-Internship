@@ -1,8 +1,8 @@
 # Internship Assignment: Hierarchical Tree Selection Component
 
 **Submitted to:** Uzence  
-**Candidate:** [Your Name]  
-**Submission Date:** January 2026
+**Candidate:** [Anushka Chaudhary]  
+**Submission Date:** 23 January 2026
 
 ## Overview
 
