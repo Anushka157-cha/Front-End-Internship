@@ -1,105 +1,74 @@
-# Accessibility Audit Report
+# Accessibility Report
 
-Generated: 20/1/2026, 7:40:55 pm
+Component follows WCAG 2.1 AA standards.
 
-## Executive Summary
+## What's Covered
 
-This component has been thoroughly audited for accessibility compliance against WCAG 2.1 Level AA standards.
+- Keyboard navigation
+- Screen reader support (ARIA)
+- Color contrast (4.5:1)
+- Focus indicators
+- Semantic HTML
 
-### Audit Coverage
+## Features
 
-- **Keyboard Navigation**: ✓ Full support
-- **Screen Reader Support**: ✓ ARIA labels and live regions
-- **Color Contrast**: ✓ WCAG AA compliant
-- **Focus Management**: ✓ Visible focus indicators
-- **Semantic HTML**: ✓ Proper ARIA roles
+### Keyboard Navigation
+- Up/Down arrows - navigate
+- Right arrow - expand
+- Left arrow - collapse
+- Enter/Space - select
+- Home/End - jump to start/end
+- Escape - close
 
-## Component Accessibility Features
+### Screen Reader
+- ARIA tree role
+- aria-expanded for node state
+- aria-selected for selections
+- aria-level for depth
+- Live regions for updates
 
-### 1. Keyboard Navigation
-- **Arrow Keys**: Navigate tree nodes (Up/Down)
-- **Right Arrow**: Expand parent nodes
-- **Left Arrow**: Collapse parent nodes
-- **Enter/Space**: Select or toggle nodes
-- **Home/End**: Jump to first/last item
-- **Escape**: Close dropdown
-- **Tab**: Move to next focusable element
+### Visual
+- 4.5:1 contrast ratio
+- 2px focus outline
+- 32px minimum touch targets
 
-### 2. Screen Reader Support
-- Full ARIA tree role implementation
-- aria-expanded for tree disclosure widgets
-- aria-selected for selected items
-- aria-level for hierarchy depth
-- aria-posinset and aria-setsize for position
-- Live regions for search results and async loading
-- aria-busy for loading states
-- aria-disabled for disabled items
-- aria-label and aria-describedby descriptions
+### Structure
+- Proper ARIA roles
+- Semantic HTML
+- Form labels connected
 
-### 3. Visual Accessibility
-- Minimum 4.5:1 color contrast for all text
-- Clear visual focus indicators (2px outline)
-- Hover states distinguishable from default
-- Icons accompanied by text labels
-- Proper spacing for touch targets (minimum 32px)
+## WCAG Tests
 
-### 4. Semantic Structure
-- Proper heading hierarchy
-- Semantic HTML elements where applicable
-- Meaningful link text
-- Form labels associated with inputs
-- Error messages linked to form fields
+| Criterion | Level | Status |
+|-----------|-------|--------|
+| Contrast (Minimum) | AA | ✓ |
+| Keyboard | A | ✓ |
+| No Keyboard Trap | A | ✓ |
+| Focus Visible | AA | ✓ |
+| Error Identification | A | ✓ |
+| Name, Role, Value | A | ✓ |
+| Status Messages | AA | ✓ |
 
-### 5. Motor Accessibility
-- All interactions keyboard accessible
-- Click targets minimum 44x44px
-- Touch-friendly spacing and sizing
-- No hover-only interactions
-- No time-dependent actions
+## Components Tested
 
-## Test Results
+- TreeCombobox
+- TreeNode
+- VirtualizedTree
+- TreeSearch
+- SelectionTags
 
-### WCAG 2.1 Compliance
+## ARIA Usage
 
-| Criterion | Level | Status | Notes |
-|-----------|-------|--------|-------|
-| 1.4.3 Contrast (Minimum) | AA | ✓ PASS | All text meets 4.5:1 ratio |
-| 2.1.1 Keyboard | A | ✓ PASS | Full keyboard support |
-| 2.1.2 No Keyboard Trap | A | ✓ PASS | Focus can exit component |
-| 2.4.7 Focus Visible | AA | ✓ PASS | Clear focus indicators |
-| 3.3.1 Error Identification | A | ✓ PASS | Errors announced to screen readers |
-| 4.1.2 Name, Role, Value | A | ✓ PASS | All elements properly labeled |
-| 4.1.3 Status Messages | AA | ✓ PASS | Live region updates announced |
+**Roles:**
+- combobox, tree, treeitem
+- status (live regions)
+- alert (errors)
 
-## Component Inventory
-
-### Components Audited
-1. **TreeCombobox** - Main selection component
-2. **TreeNode** - Individual tree items
-3. **VirtualizedTree** - Virtual scroll container
-4. **TreeSearch** - Search input
-5. **SelectionTags** - Selected items display
-
-### ARIA Implementation
-
-#### Roles
-- `role="combobox"` - Main component
-- `role="tree"` - Tree container
-- `role="treeitem"` - Tree nodes
-- `role="status"` - Live regions
-- `role="alert"` - Error messages
-- `role="option"` - Selection tags
-
-#### Properties
-- `aria-expanded` - Node expansion state
-- `aria-selected` - Selection state
-- `aria-disabled` - Disabled state
-- `aria-level` - Hierarchy depth
-- `aria-posinset` - Position in set
-- `aria-setsize` - Set size
-- `aria-label` - Component labels
-- `aria-describedby` - Component descriptions
-- `aria-busy` - Loading state
+**Properties:**
+- aria-expanded, aria-selected
+- aria-level (depth)
+- aria-posinset, aria-setsize
+- aria-busy (loading)
 - `aria-live` - Live region announcements
 - `aria-atomic` - Announce full content
 

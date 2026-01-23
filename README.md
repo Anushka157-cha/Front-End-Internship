@@ -1,199 +1,161 @@
-# Hierarchical Tree Selection Component
+# Internship Assignment: Hierarchical Tree Selection Component
 
-A scalable, accessible React component for hierarchical data selection with support for virtualization, async loading, and multi-select functionality.
+**Submitted to:** Uzence  
+**Candidate:** [Your Name]  
+**Submission Date:** January 2026
 
-## 🚀 Live Demo
+## Overview
 
-**[View Storybook →](https://697214d27903076a7e399f4f-eyatvxdksw.chromatic.com/)**
+Built a hierarchical tree selection component for React with focus on performance and accessibility. The component handles large datasets efficiently using virtual scrolling and follows WCAG 2.1 AA standards.
 
-Explore all components, features, and edge cases in the live Storybook deployment.
+**Live Demo:** [Storybook](https://697214d27903076a7e399f4f-eyatvxdksw.chromatic.com/)
 
-## Features
+## Features Implemented
 
--  **Virtualized Rendering** - Handle 50k+ nodes efficiently
--  **Multi-Select** - Select individual items or entire branches
-- **Async Loading** - Load data on-demand for large datasets
-- **Search** - Fast filtering with context preservation
-- **Keyboard Navigation** - Full keyboard accessibility
--  **ARIA Compliant** - WCAG 2.1 AA standards
--  **TypeScript** - Full type safety
--  **Tested** - Comprehensive unit and integration tests
+### Core Functionality
+- ✅ **Hierarchical Tree Structure** - Multi-level nested data rendering
+- ✅ **Multi-Select Support** - Individual and branch selection
+- ✅ **Search/Filter** - Fast search with context preservation
+- ✅ **Expand/Collapse** - Interactive tree navigation
+- ✅ **Async Data Loading** - On-demand child loading for scalability
 
-## Installation
+### Performance Optimizations
+- ✅ **Virtual Scrolling** - Efficiently handles 50,000+ nodes
+- ✅ **Lazy Loading** - Load data only when needed
+- ✅ **Debounced Search** - Optimized search performance
+- ✅ **Memoization** - Prevents unnecessary re-renders
 
-```bash
-npm install hierarchical-tree-selection
-```
+### Accessibility (WCAG 2.1 AA)
+- ✅ **Keyboard Navigation** - Complete keyboard support (Arrow keys, Enter, Escape, Home/End)
+- ✅ **Screen Reader Support** - Full ARIA tree implementation
+- ✅ **Focus Management** - Clear visual focus indicators
+- ✅ **Color Contrast** - WCAG AA compliant colors
 
-## Quick Start
+### Code Quality
+- ✅ **TypeScript** - Full type safety with strict mode
+- ✅ **Unit Tests** - Comprehensive test coverage with Vitest
+- ✅ **Accessibility Tests** - Automated a11y audits with axe-core
+- ✅ **Linting & Formatting** - ESLint + Prettier configuration
+- ✅ **Component Documentation** - Storybook with all use cases
 
-```tsx
-import { TreeCombobox } from 'hierarchical-tree-selection';
-import 'hierarchical-tree-selection/dist/style.css';
+## Tech Stack
 
-function App() {
-  const treeData = [
-    {
-      id: '1',
-      label: 'Parent',
-      children: [
-        { id: '1-1', label: 'Child 1' },
-        { id: '1-2', label: 'Child 2' }
-      ]
-    }
-  ];
+- React 18 with TypeScript (strict mode)
+- Vite for dev server and build
+- TailwindCSS for styling
+- Vitest for testing
+- Storybook for component demos
+- Chromatic for deployment
 
-  const handleSelectionChange = (selectedIds: Set<string>) => {
-    console.log('Selected:', Array.from(selectedIds));
-  };
+## Key Implementation Details
 
-  return (
-    <TreeCombobox
-      data={treeData}
-      onSelectionChange={handleSelectionChange}
-      placeholder="Select items..."
-    />
-  );
-}
-```
+**Virtual Scrolling:** Custom hook that renders only visible nodes. Tested with 50k+ nodes without lag.
 
-## Development
+**Accessibility:** Used proper ARIA tree pattern - aria-expanded, aria-selected, aria-level. Full keyboard navigation support.
 
-### Prerequisites
+**Selection Logic:** Parent-child sync using recursive traversal. Used Set for O(1) lookups.
 
-- Node.js 18+
-- npm 9+
+**Performance:** Memoized calculations, debounced search (300ms), lazy loading for async data.
 
-### Setup
+## Running the Project
+
+Requirements: Node.js 18+ and npm
 
 ```bash
-# Clone repository
-git clone <repository-url>
-cd internship\ 2
-
-# Install dependencies
 npm install
-
-# Start development server
-npm run dev
+npm run storybook  # Opens on localhost:6006
 ```
 
-### Available Scripts
+Or use `npm run dev` for the Vite dev server.
+
+### Available Commands
 
 ```bash
 # Development
+npm run storybook        # View component demos (Recommended!)
 npm run dev              # Start Vite dev server
-npm run storybook        # Start Storybook on port 6006
-
-# Build
-npm run build            # Build for production
-npm run build-storybook  # Build Storybook
 
 # Testing
-npm test                 # Run tests in watch mode
+npm test                 # Run tests
 npm run test:coverage    # Generate coverage report
-
-# Code Quality
-npm run lint             # Lint code
-npm run lint:fix         # Fix linting issues
-npm run format           # Format code with Prettier
-npm run type-check       # TypeScript type checking
-
-# Accessibility
 npm run a11y:audit       # Run accessibility audit
 
-# Deployment
-npm run chromatic        # Deploy to Chromatic
+# Build
+npm run build            # Production build
+npm run build-storybook  # Build Storybook
+
+# Code Quality
+npm run lint             # Check code quality
+npm run type-check       # TypeScript validation
+```
+
+##  Project Structure
+
+```
+src/
+├── components/
+│   ├── TreeCombobox/        # Main component
+│   ├── TreeNode/            # Individual tree node
+│   ├── SelectionTags/       # Selected items display
+│   └── VirtualizedTree/     # Virtual scroll container
+├──Project Structure
+
+```
+src/
+├── components/
+│   ├── TreeCombobox/     # Main component
+│   ├── TreeNode/         # Individual tree item
+│   ├── SelectionTags/    # Shows selected items
+│   └── VirtualizedTree/  # Handles virtual scrolling
+├── hooks/
+│   ├── useTreeData.ts
+│   ├── useSelection.ts
+│   ├── useKeyboard.ts
+│   └── useVirtualization.ts
+└── utils/
+    ├── treeTraversal.ts  # Tree algorithms
+    ├── searchUtils.ts
+    └── a11y.ts
 ```
 
 ## Documentation
 
-- [Quick Start Guide](./QUICK_START.md) - Get started in 5 minutes
-- [API Documentation](./API.md) - Complete API reference
-- [Accessibility Guide](./ACCESSIBILITY.md) - WCAG compliance details
-- [Performance Guide](./PERFORMANCE.md) - Optimization strategies
-- [Deployment Guide](./DEPLOYMENT_GUIDE.md) - Production deployment
+- [API.md](./API.md) - Props and types reference
+- [ACCESSIBILITY.md](./ACCESSIBILITY.md) - Accessibility implementation details (auto-generated from audit script)
+- [Storybook](https://697214d27903076a7e399f4f-eyatvxdksw.chromatic.com/) - L
+# View coverage report
+npm run test:coverage
 
-## Architecture
-
-The component is built with:
-
-- **React 18** - UI framework with concurrent features
-- **TypeScript** - Type safety and better DX
-- **Vite** - Fast build tool and dev server
-- **Vitest** - Unit testing framework
-- **Storybook** - Component documentation and testing
-- **TailwindCSS** - Utility-first styling
-
-## Browser Support
-
-- Chrome (last 2 versions)
-- Firefox (last 2 versions)
-- Safari (last 2 versions)
-- Edge (last 2 versions)
-
-## Accessibility
-
-This component is designed with accessibility as a priority:
-
-- ARIA 1.2 compliant tree widget patterns
-- Full keyboard navigation support
-- Screen reader optimized
-- High contrast mode support
-- Focus management
-- WCAG 2.1 AA compliant
-
-See [ACCESSIBILITY.md](./ACCESSIBILITY.md) for details.
-
-## Performance
-
-Optimized for large datasets:
-
-- Virtualized rendering (only visible nodes in DOM)
-- Async data loading support
-- Efficient state management
-- Debounced search
-- Memoized calculations
-
-See [PERFORMANCE.md](./PERFORMANCE.md) for benchmarks.
-
-## Testing
-
-Comprehensive test coverage including:
-
-- Unit tests for utilities and hooks
-- Integration tests for components
-- Accessibility tests with axe-core
-- Visual regression tests with Chromatic
-
-```bash
-npm test                 # Run all tests
-npm run test:coverage    # View coverage report
-npm run a11y:audit       # Accessibility audit
+# Run accessibility audit
+npm run a11y:audit
 ```
 
-## Contributing
+##  Code Quality Standards
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- **TypeScript Strict Mode** - No `any` types, full type safety
+- **ESLint** - Enforced code quality rules
+- **Prettier** - Consistent code formatting
+- **Component-driven** - Modular, reusable architecture
+- **Documented** - Storybook for all components
 
-## License
+##  Challenges & Solutions
 
-MIT License - see [LICENSE](./LICENSE) file for details
+**1. Performance with Large Data**
+- Problem: 10k+ nodes caused lag
+- Solution: Virtual scrolling - only 10-20 nodes in DOM at a time
 
-## Support
+**2. Keyboard Navigation**
+- Problem: Focus management across virtualized tree
+- Solution: Custom focus system with ARIA attributes
 
-For issues and questions:
+**3. Selection Logic**
+- Problem: Parent-child sync (selecting parent should select all children)
+- Solution: Recursive traversal with Set for efficient lookups
 
-- Open an issue on GitHub
-- Check [Known Limitations](./KNOWN_LIMITATIONS.md)
-- Review [Documentation Index](./DOCUMENTATION_INDEX.md)
+##
+Used Vitest for unit tests and axe-core for a11y testing.
 
-## Project Status
-
- **Production Ready** - All features complete and tested
-
-See [STATUS.md](./STATUS.md) for detailed project status.
+## Challenges Faced
+- **Live Demo:** [Storybook Deployment](https://697214d27903076a7e399f4f-eyatvxdksw.chromatic.com/)
+- **Source Code:** Check `src/` directory for implementation
+- **Tests:** See `src/` for unit tests

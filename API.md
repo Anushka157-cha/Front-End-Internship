@@ -1,8 +1,6 @@
-# TreeCombobox API Documentation
+# TreeCombobox API
 
-## Overview
-
-The TreeCombobox is a fully accessible, hierarchical selection component that supports async loading, virtualization, search, and multi-select functionality.
+Component props and usage examples.
 
 ## Props
 
@@ -49,26 +47,18 @@ interface TreeLoaderOptions {
 }
 ```
 
-## Basic Usage
+## Usage
 
 ```tsx
 import { TreeCombobox } from './components';
-import type { TreeNode } from './utils/types';
 
-const data: TreeNode[] = [
+const data = [
   {
     id: '1',
     label: 'Parent 1',
     children: [
-      { id: '1-1', label: 'Child 1-1' },
-      { id: '1-2', label: 'Child 1-2' },
-    ],
-  },
-  {
-    id: '2',
-    label: 'Parent 2',
-    children: [
-      { id: '2-1', label: 'Child 2-1' },
+      { id: '1-1', label: 'Child 1' },
+      { id: '1-2', label: 'Child 2' },
     ],
   },
 ];
@@ -77,26 +67,21 @@ function App() {
   return (
     <TreeCombobox
       nodes={data}
-      onSelectionChange={(selected) => {
-        console.log('Selected IDs:', Array.from(selected));
-      }}
+      onSelectionChange={(selected) => console.log(selected)}
     />
   );
 }
 ```
 
-## Async Loading
+## Async Data
 
 ```tsx
-const asyncLoader: TreeLoader = async ({ parentId, signal }) => {
-  const response = await fetch(`/api/nodes?parent=${parentId}`, { signal });
-  return response.json();
+const loader = async ({ parentId }) => {
+  const res = await fetch(`/api/nodes?parent=${parentId}`);
+  return res.json();
 };
 
-<TreeCombobox
-  nodes={initialNodes}
-  loader={asyncLoader}
-/>
+<TreeCombobox nodes={data} loader={loader} />
 ```
 
 ## Single Select Mode
